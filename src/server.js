@@ -1,18 +1,23 @@
-import 'dotenv';
 import express from 'express';
-import routes from './routes/index.js'
 import mongoose from 'mongoose';
+import dotenv from 'dotenv';
+import categoryRoutes from './routes/category.route.js';
+
+dotenv.config();
+
 const app = express();
 const PORT = process.env.PORT || 4000;
 
-mongoose.connect("mongodb+srv://Giorgi:Giorgi123@rustaveli.pogst.mongodb.net/?retryWrites=true&w=majority", {
-}).then(() => console.log('MongoDB connected'))
+app.use(express.json()); // Middleware to parse JSON
+
+// MongoDB connection
+mongoose.connect(process.env.MONGO_URI)
+  .then(() => console.log('MongoDB connected'))
   .catch(err => console.error('MongoDB connection error:', err));
 
-
-app.use("/api", routes);
+// Use category routes
+app.use('/api/categories', categoryRoutes);
 
 app.listen(PORT, () => {
-    console.log(`Server running on http://localhost:${PORT}`);
+  console.log(`Server running on http://localhost:${PORT}`);
 });
-  
