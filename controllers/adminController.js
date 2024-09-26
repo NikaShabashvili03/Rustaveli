@@ -17,10 +17,16 @@ exports.editShop = async (req, res) => {
 exports.editCategory = async (req, res) => {
     try {
         const { id } = req.params;
-        const updatedCategory = await Category.findByIdAndUpdate(id, req.body, { new: true });
-        res.status(200).json(updatedCategory);
-    } catch (error) {
-        res.status(500).json({ error: 'Error updating category' });
+        const editCategory = await Category.findByIdAndUpdate(id, req.body, { new: true });
+
+        if (!editCategory) {
+            return res.status(404).json({ msg: 'Category not found' });
+        }
+
+        res.json(editCategory);
+    } catch (err) {
+        console.error(err);
+        res.status(500).json({ msg: 'Server error' });
     }
 };
 
@@ -34,3 +40,4 @@ exports.editUser = async (req, res) => {
         res.status(500).json({ error: 'Error updating user' });
     }
 };
+

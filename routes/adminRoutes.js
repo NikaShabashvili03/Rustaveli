@@ -1,16 +1,15 @@
 const express = require('express');
-const adminController = require('../controllers/adminController');
-const authMiddleware = require('../middlewares/authMiddleware');
-
 const router = express.Router();
+const { adminAuth, auth } = require('../middleware/authMiddleware'); // Ensure this path is correct
 
-// Shop routes
-router.put('/shop/:id', authMiddleware.adminAuth, adminController.editShop);
+// Example route using the adminAuth middleware
+router.post('/admin/some-protected-route', adminAuth, (req, res) => {
+    res.status(200).json({ message: 'Protected route accessed by admin' });
+});
 
-// Category routes
-router.put('/category/:id', authMiddleware.adminAuth, adminController.editCategory);
-
-// User routes
-router.put('/user/:id', authMiddleware.adminAuth, adminController.editUser);
+// Example route using the auth middleware
+router.get('/user/some-general-route', auth, (req, res) => {
+    res.status(200).json({ message: 'General route accessed' });
+});
 
 module.exports = router;
