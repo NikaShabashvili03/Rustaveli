@@ -1,7 +1,10 @@
-// General error handler
+// errorHandler.js - Global error handler middleware
 const errorHandler = (err, req, res, next) => {
     console.error(err.stack);
-    res.status(500).send({ message: 'Server error', error: err.message });
+    res.status(500).json({
+        message: 'Internal server error',
+        error: err.message,
+    });
 };
 
 module.exports = errorHandler;

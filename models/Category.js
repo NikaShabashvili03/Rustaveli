@@ -5,12 +5,13 @@ const categorySchema = new mongoose.Schema({
         type: String,
         required: true,
         trim: true,
-        unique: true,  // Ensure the 'name' is unique
+        unique: true, // Unique name for each category
     },
     description: {
         type: String,
         trim: true,
     },
+    subcategories: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Subcategory' }] // Ref to subcategories
 }, { timestamps: true });
 
 module.exports = mongoose.model('Category', categorySchema);
