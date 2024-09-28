@@ -1,12 +1,11 @@
 const express = require('express');
-const productController = require('../controllers/productController'); // Make sure this path is correct
+const productController = require('../controllers/productController');
 
 const router = express.Router();
 
-// Route to create a product
-router.post('/', productController.createProduct); // Ensure createProduct is correctly referenced
-
-// Route to get products by subcategory ID
-router.get('/:subcategoryId', productController.getProductsBySubcategoryId); // Ensure getProductsBySubcategoryId is correctly referenced
+router.post('/', productController.createProduct);
+router.get('/:subcategoryId', productController.getProductsBySubcategoryId);
+router.put('/:id', productController.updateProduct);  // Update product
+router.delete('/:id', productController.deleteProduct);  // Delete product
 
 module.exports = router;
