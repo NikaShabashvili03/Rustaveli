@@ -1,5 +1,16 @@
 const mongoose = require('mongoose');
 
+const attributeSchema = new mongoose.Schema({
+    name: {
+        type: String,
+        required: true,
+    },
+    value: {
+        type: String,
+        required: true,
+    }
+});
+
 const productSchema = new mongoose.Schema({
     name: {
         type: String,
@@ -16,9 +27,10 @@ const productSchema = new mongoose.Schema({
     },
     subcategoryId: {
         type: mongoose.Schema.Types.ObjectId,
-        ref: 'Subcategory', // Reference to the Subcategory
+        ref: 'Subcategory', 
         required: true,
-    }
+    },
+    attributes: [attributeSchema],  // Array of attributes
 }, { timestamps: true });
 
 module.exports = mongoose.model('Product', productSchema);

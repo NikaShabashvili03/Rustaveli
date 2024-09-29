@@ -5,13 +5,8 @@ const validateObjectId = require('../utils/validateObjectId');
 // Create a new product
 exports.createProduct = async (req, res) => {
     try {
-        const { name, description, price, subcategoryId } = req.body;
-
-        const product = new Product({ name, description, price, subcategoryId });
+        const product = new Product(req.body); // Assuming the request body includes the correct fields
         await product.save();
-
-        await Subcategory.findByIdAndUpdate(subcategoryId, { $push: { products: product._id } });
-
         res.status(201).json(product);
     } catch (error) {
         res.status(400).json({ message: 'Product creation failed', error });
